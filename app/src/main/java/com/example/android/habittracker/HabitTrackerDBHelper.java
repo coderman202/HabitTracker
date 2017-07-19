@@ -50,11 +50,10 @@ public class HabitTrackerDBHelper extends SQLiteOpenHelper {
         createTables(db);
     }
 
-    // On upgrade drop older tables and create new ones calling the onCreate() method.
+    // This method is not required to do anything as of yet as no updates are required.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        dropTables(db);
-        onCreate(db);
+
     }
 
     /**
@@ -200,17 +199,18 @@ public class HabitTrackerDBHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * A method which queries the db and returns all the habit entries in a Cursor object.
+     *
+     * @return A cursor object
+     */
     public Cursor readHabitEntryData(){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM "+ HABIT_TABLE + ", " + HABIT_TYPE_TABLE + " WHERE " +
                 HABIT_TABLE + "." + FK_HABIT_TYPE_ID + " = " + HABIT_TYPE_TABLE + "." + PK_HABIT_TYPE_ID + ";";
 
         Cursor c = db.rawQuery(query, null);
-        if(c != null){
-            return c;
-        }
-        c.close();
-        return null;
 
+        return c;
     }
 }

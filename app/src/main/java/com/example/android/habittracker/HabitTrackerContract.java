@@ -9,6 +9,7 @@ import android.provider.BaseColumns;
 
 public final class HabitTrackerContract {
 
+    // Empty private constructor. Ensures class is not going to be initialised.
     private HabitTrackerContract(){}
 
     /**
