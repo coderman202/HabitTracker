@@ -19,7 +19,7 @@ public class HabitTrackerDBHelper extends SQLiteOpenHelper {
 
     private static final String LOG_TAG = HabitTrackerDBHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "HabitTrackerDB.db";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 9;
 
     private Context context;
 
@@ -198,5 +198,19 @@ public class HabitTrackerDBHelper extends SQLiteOpenHelper {
         c.close();
         db.close();
         return null;
+    }
+
+    public Cursor readHabitEntryData(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM "+ HABIT_TABLE + ", " + HABIT_TYPE_TABLE + " WHERE " +
+                HABIT_TABLE + "." + FK_HABIT_TYPE_ID + " = " + HABIT_TYPE_TABLE + "." + PK_HABIT_TYPE_ID + ";";
+
+        Cursor c = db.rawQuery(query, null);
+        if(c != null){
+            return c;
+        }
+        c.close();
+        return null;
+
     }
 }
